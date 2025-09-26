@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BookOpen, Phone, User, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const navItems = [
     { label: "Home", href: "#home", icon: BookOpen },
@@ -17,7 +20,7 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
               <BookOpen className="h-6 w-6 text-primary-foreground" />
             </div>
@@ -25,7 +28,7 @@ const Navigation = () => {
               <div className="text-xl font-bold text-gradient">ICT Care</div>
               <div className="text-xs text-muted-foreground">Excellence in Education</div>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -41,12 +44,23 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Login Button & Mobile Menu */}
+          {/* Auth Button & Mobile Menu */}
           <div className="flex items-center space-x-4">
-            <Button className="hidden md:flex btn-hero">
-              <LogIn className="h-4 w-4 mr-2" />
-              Login
-            </Button>
+            {user ? (
+              <Link to="/dashboard">
+                <Button className="hidden md:flex btn-hero">
+                  <User className="h-4 w-4 mr-2" />
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/auth">
+                <Button className="hidden md:flex btn-hero">
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Login
+                </Button>
+              </Link>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -73,10 +87,22 @@ const Navigation = () => {
                   <span>{item.label}</span>
                 </a>
               ))}
-              <Button className="btn-hero mx-4 mt-4">
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </Button>
+              
+              {user ? (
+                <Link to="/dashboard" className="mx-4 mt-4">
+                  <Button className="btn-hero w-full">
+                    <User className="h-4 w-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/auth" className="mx-4 mt-4">
+                  <Button className="btn-hero w-full">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
