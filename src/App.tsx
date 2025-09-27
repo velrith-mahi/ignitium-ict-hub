@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import NoticeBoard from "@/components/dashboard/NoticeBoard";
+import StudentManagement from "@/components/dashboard/StudentManagement";
+import ClassScheduleManagement from "@/components/dashboard/ClassSchedule";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,30 @@ const App = () => (
               element={
                 <ProtectedRoute requireAuth={true}>
                   <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/notices" 
+              element={
+                <ProtectedRoute requireAuth={true}>
+                  <NoticeBoard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/students" 
+              element={
+                <ProtectedRoute requireAuth={true}>
+                  <StudentManagement />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/schedules" 
+              element={
+                <ProtectedRoute requireAuth={true}>
+                  <ClassScheduleManagement />
                 </ProtectedRoute>
               } 
             />
